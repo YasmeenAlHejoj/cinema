@@ -22,7 +22,7 @@ public class MovieController {
 
     @PostMapping
     public Movie add(@RequestBody Movie movie) {
-        return movieDao.addMovie(movie);
+        return movieDao.saveMovie(movie);
     }
 
     @GetMapping

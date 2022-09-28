@@ -10,7 +10,8 @@ import java.util.List;
  * @project CinemaApp
  */
 public interface MovieDao {
-    Movie addMovie(Movie movie);
+    Movie saveMovie(Movie movie);
+    Movie updateMovie(Movie movie);
 
     Movie getMovieById(int movieId);
     List<Movie> getMovies();

@@ -25,13 +25,20 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     @Transactional
-    public Movie addMovie(Movie movie) {
+    public Movie saveMovie(Movie movie) {
         // get the current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
         movie.setCreateAt(LocalDateTime.now());
-      //  movie.setReleaseDate(LocalDateTime.now());
-        currentSession.save(movie);
+        currentSession.saveOrUpdate(movie);
         // return the results
+        return movie;
+    }
+
+    @Override
+    @Transactional
+    public Movie updateMovie(Movie movie) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.update(movie);
         return movie;
     }
 
