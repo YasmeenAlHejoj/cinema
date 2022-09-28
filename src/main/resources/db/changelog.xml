@@ -7,4 +7,6 @@
 
     <include file="changelog/create/create_table_movie.xml" relativeToChangelogFile="true" />
     <include file="changelog/addColumn/add-isAdult-to-movie.xml" relativeToChangelogFile="true" />
+    <include file="changelog/create/create_table_crew.xml" relativeToChangelogFile="true" />
+    <include file="changelog/addForeignKeyConstraint/for_crew_table.xml" relativeToChangelogFile="true" />
 </databaseChangeLog>

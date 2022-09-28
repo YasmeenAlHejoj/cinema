@@ -1,14 +1,14 @@
 package com.yasmeen.cinema.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.yasmeen.cinema.config.date.LocalDateTimeDeserializer;
+import com.yasmeen.cinema.config.date.LocalDateTimeSerializer;
 import liquibase.integration.spring.SpringLiquibase;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -18,6 +18,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -108,5 +110,18 @@ public class CinemaApp {
         txManager.setSessionFactory(sessionFactory);
         return txManager;
     }
+
+
+//To simplify @JsonSerialize and @JsonDeserializer annotations?
+/*    @Bean
+    @Primary
+    public Jackson2ObjectMapperBuilder objectMapperBuilder() {
+        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+
+        builder.serializerByType(LocalDateTime.class, new LocalDateTimeSerializer());
+        builder.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer());
+
+        return builder;
+    }*/
 
 }
