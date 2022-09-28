@@ -25,6 +25,11 @@ public class MovieController {
         return movieDao.saveMovie(movie);
     }
 
+    @PutMapping
+    public Movie update(@RequestBody Movie movie) {
+        return movieDao.updateMovie(movie);
+    }
+
     @GetMapping
     public List<Movie> get() {
         return movieDao.getMovies();
