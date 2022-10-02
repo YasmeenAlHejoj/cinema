@@ -1,13 +1,12 @@
 package com.yasmeen.cinema.features.crew.dao;
 
 import com.yasmeen.cinema.features.crew.entity.Crew;
-import com.yasmeen.cinema.features.movie.dao.MovieDao;
+import com.yasmeen.cinema.features.movie.dao.MovieDAO;
 import com.yasmeen.cinema.features.movie.entity.Movie;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,17 +17,16 @@ import java.util.List;
  * @project CinemaApp
  */
 @Repository
-public class CrewDaoImpl implements CrewDao {
+public class CrewDaoImpl implements CrewDAO {
     private final SessionFactory sessionFactory;
-    private final MovieDao movieDao;
+    private final MovieDAO movieDao;
 
-    public CrewDaoImpl(SessionFactory sessionFactory, MovieDao movieDao) {
+    public CrewDaoImpl(SessionFactory sessionFactory, MovieDAO movieDao) {
         this.sessionFactory = sessionFactory;
         this.movieDao = movieDao;
     }
 
     @Override
-    @Transactional
     public Crew saveCrew(Crew crew) {
         Session currentSession = sessionFactory.getCurrentSession();
         Movie movieById = movieDao.getMovieById(crew.getMovieId());
@@ -42,7 +40,6 @@ public class CrewDaoImpl implements CrewDao {
     }
 
     @Override
-    @Transactional
     public Crew updateCrew(Crew crew) {
         Session currentSession = sessionFactory.getCurrentSession();
         crew.setCreateAt(LocalDateTime.now());
@@ -52,7 +49,6 @@ public class CrewDaoImpl implements CrewDao {
     }
 
     @Override
-    @Transactional
     public Crew getCrewById(int crewId) {
         Session currentSession = sessionFactory.getCurrentSession();
         Crew crew = currentSession.get(Crew.class, crewId);
@@ -60,7 +56,6 @@ public class CrewDaoImpl implements CrewDao {
     }
 
     @Override
-    @Transactional
     public List<Crew> getCrews() {
         Session currentSession = sessionFactory.getCurrentSession();
         Query query = currentSession.createQuery("From Crew");
@@ -68,8 +63,17 @@ public class CrewDaoImpl implements CrewDao {
         return resultList;
     }
 
+
     @Override
-    @Transactional
+    public List<Crew> getCrewsByMovieId(int movieId) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery("From Crew where movieId=:movieId");
+        query.setParameter("movieId", movieId);
+        List resultList = query.getResultList();
+        return resultList;
+    }
+
+    @Override
     public boolean deleteCrew(int crewId) {
         Session currentSession = sessionFactory.getCurrentSession();
         Crew crewById = getCrewById(crewId);
@@ -81,4 +85,6 @@ public class CrewDaoImpl implements CrewDao {
         query.executeUpdate();
         return true;
     }
+
+
 }

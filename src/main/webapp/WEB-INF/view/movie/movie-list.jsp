@@ -11,10 +11,12 @@
 <html>
 <head>
     <title> Movie List </title>
+    <style>
+        <%@include file="/WEB-INF/css/style.css"%>
+    </style>
+
 </head>
 <body>
-
-
 <div id="wrapper">
     <div id="header">
         <h2>Cinema App </h2>
@@ -32,6 +34,7 @@
                     <th>Type</th>
                     <th>Release date</th>
                     <th>is Adult</th>
+                    <th></th>
                 </tr>
                 <%--Loop over and print customer--%>
                 <c:forEach var="tempMovie" items="${movieList}">
@@ -42,7 +45,9 @@
                         <c:param name="movieId" value="${tempMovie.id}"/>
                     </c:url>
 
-
+                    <c:url var="showCrewLink" value="/crewView/crewByMovieId">
+                        <c:param name="movieId" value="${tempMovie.id}"/>
+                    </c:url>
                     <%-- construct an delete link --%>
                     <c:url var="deleteLink" value="deleteMovie">
                         <c:param name="movieId" value="${tempMovie.id}"/>
@@ -53,11 +58,12 @@
                         <td>${tempMovie.type}</td>
                         <td>${tempMovie.releaseDate}</td>
                         <td>${tempMovie.adult}</td>
-
-                        <td>
-                                <%--display link --%>
-                            <a href="${updateLink}">Update</a>|
-                                    <a href="${deleteLink}" onclick="if(!(confirm('Are You Sure ? ')))return false">Delete</a>
+                        <td><%--display link --%>
+                            <a href="${updateLink}">Update</a>
+                            |
+                            <a href="${deleteLink}" onclick="if(!(confirm('Are You Sure ? ')))return false">Delete</a>
+                            |
+                            <a href="${showCrewLink}">ViewCrew</a>
                         </td>
                     </tr>
                 </c:forEach>

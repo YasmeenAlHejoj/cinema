@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -39,7 +40,13 @@
 
                 <tr>
                     <td><label>Release Date</label></td>
-                    <td><form:input path="releaseDate"/></td>
+                    <td><form:input path="releaseDate" type="datetime-local"/>
+                            <%--
+                            <fmt:formatDate pattern = "yyyy-MM-dd"  value = "${now}" />
+                            --%>
+                            <%-- <label for="party">Enter a date and time for your party booking:</label>
+                             <input id="party" type="datetime-local" name="party" />--%>
+                    </td>
                 </tr>
 
 
@@ -62,9 +69,8 @@
             </table>
 
 
-
         </form:form>
-        <div class="clear; both;"> </div>
+        <div class="clear; both;"></div>
         <p>
             <a href="${pageContext.request.contextPath}/view/viewList"> back to the List </a>
         </p>

@@ -1,11 +1,11 @@
 package com.yasmeen.cinema.features.movie.dao;
 
+import com.yasmeen.cinema.features.crew.entity.Crew;
 import com.yasmeen.cinema.features.movie.entity.Movie;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
  * @project CinemaApp
  */
 @Repository
-public class MovieDaoImpl implements MovieDao {
+public class MovieDaoImpl implements MovieDAO {
     private final SessionFactory sessionFactory;
 
     public MovieDaoImpl(SessionFactory sessionFactory) {
@@ -24,7 +24,6 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    @Transactional
     public Movie saveMovie(Movie movie) {
         // get the current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
@@ -35,7 +34,6 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    @Transactional
     public Movie updateMovie(Movie movie) {
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.update(movie);
@@ -43,7 +41,6 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    @Transactional
     public Movie getMovieById(int movieId) {
         Session currentSession = sessionFactory.getCurrentSession();
         Movie movie = currentSession.get(Movie.class, movieId);
@@ -51,7 +48,6 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    @Transactional
     public List<Movie> getMovies() {
         Session currentSession = sessionFactory.getCurrentSession();
         Query query = currentSession.createQuery("From Movie");
@@ -60,7 +56,6 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    @Transactional
     public boolean deleteMovie(int movieId) {
         Session currentSession = sessionFactory.getCurrentSession();
 
@@ -72,5 +67,16 @@ public class MovieDaoImpl implements MovieDao {
         query.setParameter("movieId", movieId);
         query.executeUpdate();
         return true;
+    }
+
+    @Override
+    public List<Crew> getCrewOfMovie(int movieId) {
+        //Session currentSession = sessionFactory.getCurrentSession();
+        Movie movieById = getMovieById(movieId);
+        List<Crew> crews = movieById.getCrews();
+      /*  Query query = currentSession.createQuery("From Crew where movieId=:movieId");
+        query.setParameter(movieId,"movieId");
+        List resultList = query.getResultList();*/
+        return crews;
     }
 }

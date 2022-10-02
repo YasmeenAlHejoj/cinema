@@ -6,9 +6,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yasmeen.cinema.config.date.LocalDateTimeDeserializer;
 import com.yasmeen.cinema.config.date.LocalDateTimeSerializer;
 import com.yasmeen.cinema.features.crew.entity.Crew;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,12 +45,14 @@ public class Movie {
     private boolean isAdult;
 
 
-    @OneToMany(mappedBy = "movieId",
+    @OneToMany(
+        mappedBy = "movieId",
         cascade = {CascadeType.DETACH,
         CascadeType.PERSIST,
         CascadeType.MERGE,
         CascadeType.REFRESH},
-        fetch = FetchType.LAZY)
+       fetch = FetchType.EAGER
+    )
     List<Crew> crews;
     public Movie(String title, String language, String type, LocalDateTime releaseDate, LocalDateTime createAt, boolean isAdult) {
         this.title = title;
@@ -127,6 +131,17 @@ public class Movie {
     public void setCrews(List<Crew> crews) {
         this.crews = crews;
     }
+
+    //add convenience methods for Bidirectional relationship
+ /*   public void add( Crew theCrew) {
+        if (crews == null) {
+            crews = new ArrayList<>();
+        } else {
+            crews.add(theCrew);
+        }
+
+        theCrew.setMovie(this);
+    }*/
 
     @Override
     public String toString() {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yasmeen.cinema.config.date.LocalDateTimeDeserializer;
 import com.yasmeen.cinema.config.date.LocalDateTimeSerializer;
 import com.yasmeen.cinema.features.crew.entity.constants.CrewType;
+import com.yasmeen.cinema.features.movie.entity.Movie;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -35,6 +36,15 @@ public class Crew {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @Column(name = "create_at")
     private LocalDateTime createAt;
+
+
+   /* @ManyToOne( cascade = {
+        CascadeType.DETACH,
+        CascadeType.PERSIST,
+        CascadeType.MERGE,
+        CascadeType.REFRESH})
+    @JoinColumn(name = "movie_id")
+    private Movie movie;*/
 
 
     public Crew() {
@@ -105,6 +115,13 @@ public class Crew {
         this.createAt = createAt;
     }
 
+ /*   public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }*/
 
     @Override
     public String toString() {

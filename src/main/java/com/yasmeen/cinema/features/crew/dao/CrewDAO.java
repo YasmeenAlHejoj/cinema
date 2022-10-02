@@ -1,7 +1,6 @@
 package com.yasmeen.cinema.features.crew.dao;
 
 import com.yasmeen.cinema.features.crew.entity.Crew;
-import com.yasmeen.cinema.features.movie.entity.Movie;
 
 import java.util.List;
 
@@ -10,15 +9,17 @@ import java.util.List;
  * created on 9/28/2022 at 3:41 PM
  * @project CinemaApp
  */
-public interface CrewDao {
+public interface CrewDAO {
 
-    Crew saveCrew(Crew Crew);
+    Crew saveCrew(Crew crew);
 
-    Crew updateCrew(Crew Crew);
+    Crew updateCrew(Crew crew);
 
-    Crew getCrewById(int CrewId);
+    Crew getCrewById(int crewId);
 
     List<Crew> getCrews();
 
-    boolean deleteCrew(int CrewId);
+    boolean deleteCrew(int crewId);
+
+    List<Crew> getCrewsByMovieId(int movieId);
 }

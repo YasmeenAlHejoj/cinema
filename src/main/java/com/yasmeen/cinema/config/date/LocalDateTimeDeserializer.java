@@ -25,6 +25,8 @@ public class LocalDateTimeDeserializer extends StdDeserializer<LocalDateTime> {
     @Override
     public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         String dateTime = jsonParser.getText();
+
+        System.out.println("dateTime>>>>>>>>>>>>>>>>>>>" + dateTime);
        /* return LocalDateTime.parse(jsonParser.getText(),
          DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withLocale(Locale.ENGLISH));*/
         return LocalDateTime.parse(dateTime, formatter.withLocale(Locale.ENGLISH));
